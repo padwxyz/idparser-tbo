@@ -14,7 +14,7 @@ Ket	-> PP | NP | VP | AdjP
 NP -> Noun | Pronoun | PropNoun | NP Noun | NP Pronoun | NP PropNoun | NP AdjP | Noun NP | NumP NP
 VP -> Verb | VP Adv |Adv VP | VP AdjP | AdjP VP 
 AdjP -> Adj | AdjP Adj | AdjP Adv | Adv AdjP
-PP -> Prep NP | Prep VP | Prep AdjP | Prep AdvP 
+PP -> Prep NP | Prep VP | Prep AdjP | Prep Adv 
 NumP -> Num
 Adj -> merah | hitam | kurus | besar | tua | tinggi | sejuk | tebal | ungu | cerah | biru | indah | oranye | dingin | lusuh | tenang | kuning | putih | panjang | besar | kecil | harum | rapuh | manis | kotor | curam | unik | lelah | segar | panas | enak | mahal | cantik | bersih | ramai | basah | banyak | pucat | kuat | mental | dramatis | rapi | layak | senang | usang | terang | jarang | berat | resah | sakit | terbaru | sebaik | marah berkumpul | besar | deras | cepat 
 Adv	-> masih | sangat | tidak | begitu | sudah | selalu | mungkin | sedang | kadang-kadang | sering 

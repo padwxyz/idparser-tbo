@@ -1,4 +1,4 @@
-K -> K1 Pel | K1 Ket | K3 Ket | K2 Pel | K2 Ket | K4 Ket
+K -> K1 Ket | K3 Ket | K2 Ket | K4 Ket
 K1 -> S P
 K2 -> K1 O
 K3 -> K1 Pel

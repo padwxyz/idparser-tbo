@@ -5,72 +5,77 @@ TRIANGULAR_TABLE = {}
 RESULT = {}
 
 
+# untuk membuka file grammar yaitu rules CNF
 def get_grammar():
     global RESULT
     RESULT.clear()
 
     dirpath = os.path.dirname(os.path.abspath(__file__))
 
-    with open(os.path.join(dirpath, "../cnf.txt"), "r", encoding="utf-8") as f:
+    with open(os.path.join(dirpath, "../full-cnf.txt"), "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             lhs, rhs = line.split(" -> ")
             rhs = rhs.split(" | ")
 
+            # menyimpan aturan produksi
             if lhs in RESULT:
                 RESULT[lhs].extend(rhs)
             else:
                 RESULT[lhs] = rhs
 
+    # mengkonversi PropNoun agar dapat menjadi huruf kecil
     for key, value in RESULT.items():
-        if key == "Propnoun":
+        if key == "PropNoun":
             RESULT[key] = list(set(map(str.lower, value)))
 
     print(RESULT)
     return RESULT
 
 
-def is_accepted(input_string):
-    production_rules = get_grammar()
+# memeriksa apakah string dapat diterima atau ditolak
+def is_accepted(text_input):
+    initialize_triangular_table(text_input)
 
-    initialize_triangular_table(input_string)
-
-    for i in reversed(range(1, len(input_string) + 1)):
+    for i in reversed(range(1, len(text_input) + 1)):
         for j in range(1, i + 1):
-            if j == j + len(input_string) - i:
-                update_bottom_row(input_string, j)
+            if j == j + len(text_input) - i:
+                update_bottom_row(text_input, j)
             else:
-                combine_cells(input_string, j, i)
+                combine_cells(text_input, j, i)
 
-    return "K" in TRIANGULAR_TABLE[(1, len(input_string))]
+    return "K" in TRIANGULAR_TABLE[(1, len(text_input))]
 
 
-def initialize_triangular_table(input_string):
-    for i in range(1, len(input_string) + 1):
-        for j in range(i, len(input_string) + 1):
+# menginisialisasi tabel triangular cyk
+def initialize_triangular_table(text_input):
+    for i in range(1, len(text_input) + 1):
+        for j in range(i, len(text_input) + 1):
             TRIANGULAR_TABLE[(i, j)] = []
 
 
-def update_bottom_row(input_string, j):
+# memperbarui baris terbawah tabel triangular cyk
+def update_bottom_row(text_input, j):
     temp_list = []
     production_rules = get_grammar()
 
     for key, value in production_rules.items():
         for val in value:
-            if val == input_string[j - 1] and key not in temp_list:
+            if val == text_input[j - 1] and key not in temp_list:
                 temp_list.append(key)
 
-    TRIANGULAR_TABLE[(j, j + len(input_string) - len(input_string))] = temp_list
+    TRIANGULAR_TABLE[(j, j + len(text_input) - len(text_input))] = temp_list
 
 
-def combine_cells(input_string, j, i):
+# menggabungkan cells dalam tabel cyk
+def combine_cells(text_input, j, i):
     temp_list = []
     result_list = []
     production_rules = get_grammar()
 
-    for k in range(len(input_string) - i):
+    for k in range(len(text_input) - i):
         first = TRIANGULAR_TABLE[(j, j + k)]
-        second = TRIANGULAR_TABLE[(j + k + 1, j + len(input_string) - i)]
+        second = TRIANGULAR_TABLE[(j + k + 1, j + len(text_input) - i)]
 
         for fi in first:
             for se in second:
@@ -83,13 +88,14 @@ def combine_cells(input_string, j, i):
             if val in temp_list and key not in result_list:
                 result_list.append(key)
 
-    TRIANGULAR_TABLE[(j, j + len(input_string) - i)] = result_list
+    TRIANGULAR_TABLE[(j, j + len(text_input) - i)] = result_list
 
 
-def get_table_element(input_string):
+# mendapatkan elemen elemen dari tabel hasil
+def get_table_element(text_input):
     global TRIANGULAR_TABLE
     result = []
-    n = len(input_string.split(" "))
+    n = len(text_input.split(" "))
 
     for i in range(1, n + 1):
         temp = []
@@ -101,5 +107,5 @@ def get_table_element(input_string):
 
         result.append(temp)
 
-    result.append(input_string.split(" "))
+    result.append(text_input.split(" "))
     return result
