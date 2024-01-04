@@ -10,7 +10,7 @@ S -> NP
 P -> VP | AdjP
 O -> NP 
 Pel -> NP | AdjP | PP
-Ket	-> PP | NP | VP | AdjP
+Ket -> PP | NP | VP | AdjP
 NP -> Noun | Pronoun | PropNoun | NP Noun | NP Pronoun | NP PropNoun | NP AdjP | Noun NP | NumP NP
 VP -> Verb | VP Adv |Adv VP | VP AdjP | AdjP VP 
 AdjP -> Adj | AdjP Adj | AdjP Adv | Adv AdjP
